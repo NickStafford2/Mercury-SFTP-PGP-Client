@@ -1,0 +1,72 @@
+# -----------------------------------
+# Python
+# -----------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+*.egg-info/
+dist/
+build/
+
+# -----------------------------------
+# Poetry / packaging
+# -----------------------------------
+.poetry/
+poetry.lock
+# (keep poetry.lock in git unless you explicitly don't want it)
+# uncomment above line only if you want to ignore it
+
+# virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# -----------------------------------
+# Environment variables
+# -----------------------------------
+.env
+.env.*
+!.env.example
+
+# -----------------------------------
+# IDEs
+# -----------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -----------------------------------
+# OS files
+# -----------------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------------
+# Logs / runtime artifacts
+# -----------------------------------
+*.log
+logs/
+work/
+tmp/
+temp/
+
+# -----------------------------------
+# Testing / tooling
+# -----------------------------------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# -----------------------------------
+# Optional: local scripts / secrets
+# -----------------------------------
+*.key
+*.pem
+*.asc
