@@ -1,4 +1,4 @@
-# PGP Key Exchange Process
+# Instructions for PGP Key Exchange Process
 
 ## Purpose
 
@@ -6,26 +6,52 @@ To securely exchange encrypted files, each party will provide its PGP public key
 
 ## Step 1: Generate a PGP Key Pair
 
-If a PGP key pair does not already exist, generate one using GPG:
+Generate a dedicated PGP key for the Mercury file exchange:
 
 ```bash
 gpg --full-generate-key
 ```
 
-Record the email address associated with the key, as it will be used as the key identifier.
+When prompted, use a descriptive name such as:
+
+```
+Foundations Mercury File Exchange
+```
+
+You may optionally provide an email address such as:
+
+```
+sftp@foundations.com
+```
+
+After creation, verify the key:
+
+```bash
+gpg --list-keys
+```
+
+Example output:
+
+```
+pub   rsa4096 2026-06-08 [SC]
+      ABCD1234EFGH5678IJKL9012MNOP3456QRST7890
+uid   Foundations Mercury File Exchange <sftp@foundations.com>
+```
 
 ## Step 2: Export the Public Key
 
-Export the public key in ASCII-armored format:
+Export the public key using the key name or email address:
 
 ```bash
-gpg --armor --export you@foundations.com > company-public-key.asc
+gpg --armor \
+    --export "Foundations Mercury File Exchange" \
+    > foundations-mercury-public-key.asc
 ```
 
-This creates a file similar to:
+This creates:
 
 ```
-company-public-key.asc
+foundations-mercury-public-key.asc
 ```
 
 The file contents will begin with:
@@ -36,21 +62,21 @@ The file contents will begin with:
 
 ## Step 3: Exchange Public Keys
 
-Each party will send its ASCII-armored public key (`.asc` file) to the other party via email or another agreed-upon communication channel.
+Each party will send its ASCII-armored public key (`.asc` file) to the other party.
 
 Example:
 
-* Our Company sends: `our-public-key.asc`
-* Partner sends: `partner-public-key.asc`
+* Foundations sends: `foundations-mercury-public-key.asc`
+* Mercury sends: `mercury-public-key.asc`
 
 No private keys should ever be transmitted.
 
 ## Step 4: Import the Partner's Public Key
 
-After receiving the partner's public key:
+After receiving Mercury's public key:
 
 ```bash
-gpg --import partner-public-key.asc
+gpg --import mercury-public-key.asc
 ```
 
 Verify that the key has been imported successfully:
@@ -66,46 +92,7 @@ Before using the exchanged keys, both parties should verify key fingerprints thr
 View a key fingerprint:
 
 ```bash
-gpg --fingerprint partner@example.com
+gpg --fingerprint "Mercury File Exchange"
 ```
 
 Confirm that the fingerprint exactly matches the fingerprint provided by the partner.
-
-## Step 6: Encrypt Files for Transmission
-
-Before uploading a file to the SFTP server, encrypt it using the partner's public key:
-
-```bash
-gpg --encrypt \
-    --recipient partner@example.com \
-    filename.csv
-```
-
-This produces an encrypted file, for example:
-
-```
-filename.csv.gpg
-```
-
-Only the partner, using their private key, can decrypt the file.
-
-## Step 7: Upload Encrypted Files via SFTP
-
-Upload only encrypted files to the designated SFTP directory.
-
-Example workflow:
-
-1. Generate file
-2. Encrypt file using partner's public key
-3. Upload encrypted file to SFTP
-4. Partner downloads encrypted file
-5. Partner decrypts using their private key
-
-## Security Requirements
-
-* Share only public keys (`.asc` files).
-* Never share private keys.
-* Verify fingerprints before first use.
-* Store private keys securely.
-* Use passphrase-protected private keys whenever possible.
-* Upload only encrypted files to the SFTP environment.
