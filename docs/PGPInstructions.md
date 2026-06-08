@@ -15,13 +15,12 @@ gpg --full-generate-key
 When prompted, use a descriptive name such as:
 
 ```
-Foundations Mercury File Exchange
-```
-
-You may optionally provide an email address such as:
-
-```
-sftp@foundations.com
+Key Type: RSA and RSA
+Key Size: 4096
+Expiration: 2 years (or 1 year if your security team prefers rotation)
+User ID: Foundations Mercury File Exchange
+Passphrase: Strong passphrase
+Email: someEmail@foundations.com
 ```
 
 After creation, verify the key:
@@ -92,7 +91,8 @@ Before using the exchanged keys, both parties should verify key fingerprints thr
 View a key fingerprint:
 
 ```bash
-gpg --fingerprint "Mercury File Exchange"
+gpg --fingerprint "Foundations Mercury File Exchange"
 ```
 
+Provide that fingerprint to Mercury and request theirs as well. 
 Confirm that the fingerprint exactly matches the fingerprint provided by the partner.
