@@ -13,7 +13,8 @@ log = get_logger()
 
 def send_file(file_path: str | Path) -> Path:
     cfg = Config.from_env()
-    cfg.require_encryption_recipient()
+    if not cfg.pgp_recipient:
+        raise ValueError("Set PGP_RECIPIENT to Mercury's verified PGP fingerprint before sending files")
 
     source_path = Path(file_path).expanduser()
     if not source_path.is_file():
@@ -27,9 +28,7 @@ def send_file(file_path: str | Path) -> Path:
     encrypt_file(
         source_path,
         encrypted_path,
-        recipient=cfg.pgp_recipient,
-        recipient_file=cfg.pgp_public_key_path,
-        gpg_home=cfg.gpg_home,
+        cfg.pgp_recipient,
     )
 
     log.info("Uploading %s", remote_path)
@@ -40,8 +39,6 @@ def send_file(file_path: str | Path) -> Path:
         cfg.sftp_port,
         cfg.sftp_user,
         cfg.ssh_key_path,
-        key_passphrase=cfg.ssh_key_passphrase,
-        timeout_seconds=cfg.sftp_timeout_seconds,
     )
 
     log.info("Send complete")

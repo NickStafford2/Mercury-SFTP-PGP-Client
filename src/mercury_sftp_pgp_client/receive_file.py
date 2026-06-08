@@ -31,16 +31,13 @@ def receive_file(remote_filename: str) -> Path:
         cfg.sftp_port,
         cfg.sftp_user,
         cfg.ssh_key_path,
-        key_passphrase=cfg.ssh_key_passphrase,
-        timeout_seconds=cfg.sftp_timeout_seconds,
     )
 
     log.info("Decrypting %s", encrypted_local)
     decrypt_file(
         encrypted_local,
         decrypted_local,
-        passphrase=cfg.pgp_passphrase,
-        gpg_home=cfg.gpg_home,
+        cfg.pgp_passphrase,
     )
 
     log.info("Receive complete: %s", decrypted_local)

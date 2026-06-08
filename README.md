@@ -31,12 +31,11 @@ normal SSH `known_hosts` file before running transfers.
 
 ## PGP/GPG Notes
 
-For production, prefer `PGP_RECIPIENT` set to a verified key fingerprint or key
-ID. `PGP_PUBLIC_KEY_PATH` is also supported for file-based recipient keys.
+Import Mercury's public key into GPG, verify the fingerprint through a secondary
+channel, then set `PGP_RECIPIENT` to that verified fingerprint.
 
-Decryption uses the secret key available in the configured GPG keyring. If
-`GPG_HOME` is set, that GPG home directory is used. `PGP_PASSPHRASE` is passed
-to `gpg` through stdin, not as a command-line argument.
+Decryption uses our secret key from the normal GPG keyring. `PGP_PASSPHRASE` is
+passed to `gpg` through stdin, not as a command-line argument.
 
 ## Usage
 

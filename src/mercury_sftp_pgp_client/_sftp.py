@@ -7,6 +7,8 @@ from uuid import uuid4
 
 import paramiko
 
+SFTP_TIMEOUT_SECONDS = 30
+
 
 def _remote_join(directory: str, filename: str) -> str:
     if filename in {"", ".", ".."}:
@@ -27,9 +29,6 @@ def _connect(
     port: int,
     user: str,
     key_path: Path,
-    *,
-    key_passphrase: str | None = None,
-    timeout_seconds: int = 30,
 ) -> Iterator[paramiko.SFTPClient]:
     client = paramiko.SSHClient()
     client.load_system_host_keys()
@@ -40,12 +39,11 @@ def _connect(
         port=port,
         username=user,
         key_filename=str(key_path),
-        passphrase=key_passphrase,
         look_for_keys=False,
         allow_agent=False,
-        timeout=timeout_seconds,
-        banner_timeout=timeout_seconds,
-        auth_timeout=timeout_seconds,
+        timeout=SFTP_TIMEOUT_SECONDS,
+        banner_timeout=SFTP_TIMEOUT_SECONDS,
+        auth_timeout=SFTP_TIMEOUT_SECONDS,
     )
 
     sftp = client.open_sftp()
@@ -63,9 +61,6 @@ def upload_file(
     port: int,
     user: str,
     key_path: Path,
-    *,
-    key_passphrase: str | None = None,
-    timeout_seconds: int = 30,
 ) -> None:
     local_path = local_path.expanduser()
     if not local_path.is_file():
@@ -77,8 +72,6 @@ def upload_file(
         port,
         user,
         key_path,
-        key_passphrase=key_passphrase,
-        timeout_seconds=timeout_seconds,
     ) as sftp:
         try:
             sftp.put(str(local_path), tmp_remote, confirm=True)
@@ -101,9 +94,6 @@ def download_file(
     port: int,
     user: str,
     key_path: Path,
-    *,
-    key_passphrase: str | None = None,
-    timeout_seconds: int = 30,
 ) -> None:
     local_path = local_path.expanduser()
     local_path.parent.mkdir(parents=True, exist_ok=True)
@@ -114,8 +104,6 @@ def download_file(
         port,
         user,
         key_path,
-        key_passphrase=key_passphrase,
-        timeout_seconds=timeout_seconds,
     ) as sftp:
         try:
             sftp.get(remote_path, str(tmp_local))

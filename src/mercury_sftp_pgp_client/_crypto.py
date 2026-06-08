@@ -4,13 +4,6 @@ import subprocess
 from pathlib import Path
 
 
-def _gpg_base_args(gpg_home: Path | None = None) -> list[str]:
-    args = ["gpg", "--batch", "--yes", "--no-tty"]
-    if gpg_home:
-        args.extend(["--homedir", str(gpg_home)])
-    return args
-
-
 def _run_gpg(args: list[str], *, passphrase: str | None = None) -> None:
     input_text = None
     if passphrase is not None:
@@ -29,44 +22,39 @@ def _run_gpg(args: list[str], *, passphrase: str | None = None) -> None:
         raise RuntimeError(detail)
 
 
-def encrypt_file(
-    input_path: Path,
-    output_path: Path,
-    *,
-    recipient: str | None = None,
-    recipient_file: Path | None = None,
-    gpg_home: Path | None = None,
-) -> None:
-    if not recipient and not recipient_file:
-        raise ValueError("recipient or recipient_file is required")
-
+def encrypt_file(input_path: Path, output_path: Path, recipient: str) -> None:
     input_path = input_path.expanduser()
     output_path = output_path.expanduser()
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    args = _gpg_base_args(gpg_home)
-    args.extend(["--trust-model", "always", "--output", str(output_path), "--encrypt"])
+    _run_gpg([
+        "gpg",
+        "--batch",
+        "--yes",
+        "--no-tty",
+        "--trust-model",
+        "always",
+        "--output",
+        str(output_path),
+        "--encrypt",
+        "--recipient",
+        recipient,
+        str(input_path),
+    ])
 
-    if recipient:
-        args.extend(["--recipient", recipient])
-    if recipient_file:
-        args.extend(["--recipient-file", str(recipient_file.expanduser())])
 
-    args.append(str(input_path))
-    _run_gpg(args)
-
-
-def decrypt_file(
-    input_path: Path,
-    output_path: Path,
-    *,
-    passphrase: str | None = None,
-    gpg_home: Path | None = None,
-) -> None:
+def decrypt_file(input_path: Path, output_path: Path, passphrase: str | None = None) -> None:
     input_path = input_path.expanduser()
     output_path = output_path.expanduser()
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    args = _gpg_base_args(gpg_home)
-    args.extend(["--output", str(output_path), "--decrypt", str(input_path)])
-    _run_gpg(args, passphrase=passphrase)
+    _run_gpg([
+        "gpg",
+        "--batch",
+        "--yes",
+        "--no-tty",
+        "--output",
+        str(output_path),
+        "--decrypt",
+        str(input_path),
+    ], passphrase=passphrase)
