@@ -7,7 +7,7 @@ from pathlib import Path
 def _run_gpg(args: list[str], *, passphrase: str | None = None) -> None:
     input_text = None
     if passphrase is not None:
-        args.extend(["--pinentry-mode", "loopback", "--passphrase-fd", "0"])
+        args = args[:1] + ["--pinentry-mode", "loopback", "--passphrase-fd", "0"] + args[1:]
         input_text = f"{passphrase}\n"
 
     result = subprocess.run(
