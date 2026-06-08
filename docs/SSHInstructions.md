@@ -18,12 +18,9 @@ ssh-keygen -t ed25519 \
 This creates:
 
 ```text
-~/.ssh/mercury_sftp_ed25519
-~/.ssh/mercury_sftp_ed25519.pub
+~/.ssh/mercury_sftp_ed25519       # Private key that must remain confidential
+~/.ssh/mercury_sftp_ed25519.pub   # Public key that provide to Mercury
 ```
-
-* `mercury_sftp_ed25519` is the private key and must remain confidential.
-* `mercury_sftp_ed25519.pub` is the public key and will be provided to Mercury.
 
 ## Step 2: Provide the Public Key to Mercury
 
@@ -33,29 +30,11 @@ Send the contents of:
 ~/.ssh/mercury_sftp_ed25519.pub
 ```
 
-to Mercury as part of the SFTP onboarding process.
+to Mercury as part of the SFTP onboarding process. Do not send the private key file.
 
-Do not send the private key file.
 
-## Step 3: Send the Public Key to the Partner
 
-Provide the contents of the public key file or attach the `.pub` file to a secure email.
-
-Example file:
-
-```text
-mercury_sftp_ed25519.pub
-```
-
-Only the public key should be transmitted.
-
-Do not send:
-
-* `mercury_sftp_ed25519`
-* any private key file
-* any passphrase associated with the private key
-
-## Step 4: Partner Configures Access
+## Step 3: Partner Configures Access
 
 The partner will install the public key on their SFTP server and associate it with the SFTP account created for our organization.
 
@@ -67,7 +46,7 @@ The partner will then provide:
 * Available directories
 * Any additional onboarding instructions
 
-## Step 5: Test Connectivity
+## Step 4: Test Connectivity
 
 Once the partner confirms setup is complete, test the connection:
 
