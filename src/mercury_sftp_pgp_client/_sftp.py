@@ -29,20 +29,11 @@ def _connect(
     key_path: Path,
     *,
     key_passphrase: str | None = None,
-    known_hosts_path: Path | None = None,
-    allow_unknown_host: bool = False,
     timeout_seconds: int = 30,
 ) -> Iterator[paramiko.SFTPClient]:
     client = paramiko.SSHClient()
     client.load_system_host_keys()
-
-    if known_hosts_path:
-        client.load_host_keys(str(known_hosts_path))
-
-    if allow_unknown_host:
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    else:
-        client.set_missing_host_key_policy(paramiko.RejectPolicy())
+    client.set_missing_host_key_policy(paramiko.RejectPolicy())
 
     client.connect(
         hostname=host,
@@ -74,8 +65,6 @@ def upload_file(
     key_path: Path,
     *,
     key_passphrase: str | None = None,
-    known_hosts_path: Path | None = None,
-    allow_unknown_host: bool = False,
     timeout_seconds: int = 30,
 ) -> None:
     local_path = local_path.expanduser()
@@ -89,8 +78,6 @@ def upload_file(
         user,
         key_path,
         key_passphrase=key_passphrase,
-        known_hosts_path=known_hosts_path,
-        allow_unknown_host=allow_unknown_host,
         timeout_seconds=timeout_seconds,
     ) as sftp:
         try:
@@ -116,8 +103,6 @@ def download_file(
     key_path: Path,
     *,
     key_passphrase: str | None = None,
-    known_hosts_path: Path | None = None,
-    allow_unknown_host: bool = False,
     timeout_seconds: int = 30,
 ) -> None:
     local_path = local_path.expanduser()
@@ -130,8 +115,6 @@ def download_file(
         user,
         key_path,
         key_passphrase=key_passphrase,
-        known_hosts_path=known_hosts_path,
-        allow_unknown_host=allow_unknown_host,
         timeout_seconds=timeout_seconds,
     ) as sftp:
         try:

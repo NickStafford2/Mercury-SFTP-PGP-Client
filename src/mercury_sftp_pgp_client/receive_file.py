@@ -32,8 +32,6 @@ def receive_file(remote_filename: str) -> Path:
         cfg.sftp_user,
         cfg.ssh_key_path,
         key_passphrase=cfg.ssh_key_passphrase,
-        known_hosts_path=cfg.sftp_known_hosts_path,
-        allow_unknown_host=cfg.sftp_allow_unknown_host,
         timeout_seconds=cfg.sftp_timeout_seconds,
     )
 

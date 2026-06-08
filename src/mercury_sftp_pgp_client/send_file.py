@@ -41,8 +41,6 @@ def send_file(file_path: str | Path) -> Path:
         cfg.sftp_user,
         cfg.ssh_key_path,
         key_passphrase=cfg.ssh_key_passphrase,
-        known_hosts_path=cfg.sftp_known_hosts_path,
-        allow_unknown_host=cfg.sftp_allow_unknown_host,
         timeout_seconds=cfg.sftp_timeout_seconds,
     )
 

@@ -16,13 +16,6 @@ def _required_env(name: str) -> str:
     return value
 
 
-def _env_bool(name: str, default: bool = False) -> bool:
-    value = os.getenv(name)
-    if value is None:
-        return default
-    return value.strip().lower() in {"1", "true", "yes", "on"}
-
-
 def _env_int(name: str, default: int) -> int:
     value = os.getenv(name)
     if value is None:
@@ -46,8 +39,6 @@ class Config:
     sftp_user: str
     ssh_key_path: Path
     ssh_key_passphrase: str | None
-    sftp_known_hosts_path: Path | None
-    sftp_allow_unknown_host: bool
     sftp_timeout_seconds: int
 
     remote_inbound_dir: str
@@ -71,8 +62,6 @@ class Config:
             sftp_user=_required_env("SFTP_USER"),
             ssh_key_path=ssh_key_path,
             ssh_key_passphrase=os.getenv("SSH_KEY_PASSPHRASE") or None,
-            sftp_known_hosts_path=_expand_path(os.getenv("SFTP_KNOWN_HOSTS_PATH")),
-            sftp_allow_unknown_host=_env_bool("SFTP_ALLOW_UNKNOWN_HOST", False),
             sftp_timeout_seconds=_env_int("SFTP_TIMEOUT_SECONDS", 30),
             remote_inbound_dir=os.getenv("REMOTE_INBOUND_DIR", "/inbound"),
             remote_outbound_dir=os.getenv("REMOTE_OUTBOUND_DIR", "/outbound"),

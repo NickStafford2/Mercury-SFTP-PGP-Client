@@ -28,8 +28,6 @@ SFTP_PORT=22
 SFTP_USER=username
 SSH_KEY_PATH=~/.ssh/id_ed25519
 SSH_KEY_PASSPHRASE=
-SFTP_KNOWN_HOSTS_PATH=
-SFTP_ALLOW_UNKNOWN_HOST=false
 SFTP_TIMEOUT_SECONDS=30
 
 REMOTE_INBOUND_DIR=/inbound
@@ -47,15 +45,8 @@ WORK_DIR=work
 
 Use normal SSH keys. Ed25519 is the recommended default for new SSH keys.
 
-Production defaults reject unknown SFTP host keys. Either make sure the server
-host key is already in the system `known_hosts` file, or set
-`SFTP_KNOWN_HOSTS_PATH` to a known-hosts file provisioned for this transfer.
-
-For local Docker testing only, you can set:
-
-```env
-SFTP_ALLOW_UNKNOWN_HOST=true
-```
+The client always rejects unknown SFTP host keys. Add the server host key to the
+normal SSH `known_hosts` file before running transfers.
 
 ## PGP/GPG Notes
 
