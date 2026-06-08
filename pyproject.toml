@@ -9,7 +9,6 @@ packages = [{ include = "mercury_sftp_pgp_client", from = "src" }]
 [tool.poetry.dependencies]
 python = "^3.11"
 paramiko = "^3.4.0"
-pgpy = "^0.6.0"
 python-dotenv = "^1.0.1"
 
 [build-system]
