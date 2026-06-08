@@ -22,25 +22,6 @@ gpg --version
 
 Copy `.env.example` to `.env` and set the values for the target environment.
 
-```env
-SFTP_HOST=sftp.example.com
-SFTP_PORT=22
-SFTP_USER=username
-SSH_KEY_PATH=~/.ssh/id_ed25519
-SSH_KEY_PASSPHRASE=
-SFTP_TIMEOUT_SECONDS=30
-
-REMOTE_INBOUND_DIR=/inbound
-REMOTE_OUTBOUND_DIR=/outbound
-
-PGP_RECIPIENT=
-PGP_PUBLIC_KEY_PATH=keys/public.asc
-PGP_PASSPHRASE=secret
-GPG_HOME=
-
-WORK_DIR=work
-```
-
 ## SSH/SFTP Notes
 
 Use normal SSH keys. Ed25519 is the recommended default for new SSH keys.
