@@ -15,3 +15,7 @@ python-dotenv = "^1.0.1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+send-file = "mercury_sftp_pgp_client.send_file:main"
+receive-file = "mercury_sftp_pgp_client.receive_file:main"
