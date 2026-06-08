@@ -1,4 +1,4 @@
-# Providing an SSH Public Key for SFTP Access
+# Instructions for SFTP Access
 
 ## Purpose
 
@@ -88,11 +88,3 @@ Verify access by listing the available directories:
 sftp> ls
 ```
 
-## Security Requirements
-
-* Share only the SSH public key (`.pub` file).
-* Never share the SSH private key.
-* Store private keys securely and restrict access to authorized personnel.
-* Protect private keys with a passphrase whenever possible.
-* Rotate keys according to company security policies.
-* Notify the partner immediately if a private key is suspected to be compromised.
