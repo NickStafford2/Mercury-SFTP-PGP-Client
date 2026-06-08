@@ -32,8 +32,6 @@ Send the contents of:
 
 to Mercury as part of the SFTP onboarding process. Do not send the private key file.
 
-
-
 ## Step 3: Partner Configures Access
 
 The partner will install the public key on their SFTP server and associate it with the SFTP account created for our organization.
