@@ -58,3 +58,9 @@ poetry check
 poetry run python -m unittest discover
 poetry run python -m compileall src tests
 ```
+
+Run the local Docker/GPG/SFTP end-to-end test:
+
+```bash
+RUN_E2E=1 poetry run python -m unittest tests.test_end_to_end
+```

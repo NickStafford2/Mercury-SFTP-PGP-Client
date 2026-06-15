@@ -17,7 +17,7 @@ When prompted, use a descriptive name such as:
 ```
 Key Type: RSA and RSA
 Key Size: 4096
-Expiration: 2 years (or 1 year if your security team prefers rotation)
+Expiration: 2 years
 User ID: Foundations Mercury File Exchange
 Passphrase: Strong passphrase
 Email: someEmail@foundations.com
